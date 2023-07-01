@@ -29,7 +29,7 @@ function Login() {
     }, [password]);
 
     return (
-        <main className='w-[100vw] h-[100vh] flex items-center justify-center'>
+        <main className='w-[100vw] max-w-[512px] h-[100vh] flex items-center justify-center'>
             <div className='w-[95%] flex flex-col items-center h-[95%]'>
                 <CurrentPage pageName='Login' />
                 <div className='w-[95%] mt-[100px] flex flex-col items-center gap-[20px]'>
