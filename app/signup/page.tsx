@@ -19,6 +19,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showVerificationLinkModal, setShowVerificationLinkModal] = useState(false);
+    const [fetching, setFetching] = useState(false);
 
     const handleSignup = () => {
         let validFields = true;
@@ -63,6 +64,7 @@ function Signup() {
             });
         }
         if (validFields) {
+            setFetching(true)
             const signup = async () => {
                 const response = await axios.post(`${config.BACKEND_ENDPOINT}/auth/signup`, {
                     email: email,
@@ -73,7 +75,9 @@ function Signup() {
 
             signup().then(() => {
                 setShowVerificationLinkModal(true);
+                setFetching(false);
             }).catch((err) => {
+                setFetching(false)
                 toast.error(err.response.data.message, {
                     position: "bottom-center",
                     autoClose: 3000,
