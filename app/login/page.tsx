@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react'
 import CurrentPage from '../components/CurrentPage';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import EmailInput from '../components/reusable/inputs/EmailInput';
 import PasswordInput from '../components/reusable/inputs/PasswordInput';
 import LoginButton from './LoginButton';
@@ -9,14 +9,19 @@ import Link from 'next/link';
 import GoogleLogin from './GoogleLogin';
 import validator from 'validator';
 import { ToastContainer, toast } from 'react-toastify';
-import { SyncLoader } from 'react-spinners';
+import { PulseLoader, SyncLoader } from 'react-spinners';
 import 'react-toastify/dist/ReactToastify.css';
 import { redirect } from 'next/navigation';
+import axios from 'axios';
+import config from '../config';
+import { useRouter } from 'next/navigation';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [fetching, setFetching] = useState(false);
     const { data: session, status } = useSession();
+    const router = useRouter();
 
     const loginButtonHandler = () => {
         let validFields = true;
@@ -48,7 +53,49 @@ function Login() {
         }
 
         if (validFields) {
+            const status = signIn('credentials', { email: email, password: password, redirect: false, callbackUrl: '/home' });
+            console.log(status);
+            // setFetching(true)
+            // const verifyLogin = async () => {
+            //     const response = await axios.post(`${config.BACKEND_ENDPOINT}/auth/login`, {
+            //         email: email,
+            //         password: password
+            //     })
+            //     console.log(response);
+            //     return true;
+            // }
+            // verifyLogin().then(() => {
+            //     setFetching(false)
+            //     toast.success('Welcome back, redirecting you...', {
+            //         position: "bottom-center",
+            //         autoClose: 2000,
+            //         hideProgressBar: false,
+            //         closeOnClick: true,
+            //         pauseOnHover: true,
+            //         draggable: true,
+            //         progress: undefined,
+            //         theme: "colored",
+            //     });
+            //     try {
+            //         router.push('/home')
+            //     } catch (error) {
+            //         console.log(error);
+            //     }
 
+
+            // }).catch((err) => {
+            //     setFetching(false)
+            //     toast.error(err.response.data, {
+            //         position: "bottom-center",
+            //         autoClose: 3000,
+            //         hideProgressBar: false,
+            //         closeOnClick: true,
+            //         pauseOnHover: true,
+            //         draggable: true,
+            //         progress: undefined,
+            //         theme: "light",
+            //     });
+            // })
         }
     }
 
@@ -75,7 +122,9 @@ function Login() {
                     passwordColor={password.length > 7 ? '#199A8E' : '#A1A8B0'}
                     onChangeHandler={(e) => setPassword(e.target.value)}
                 />
-                <LoginButton loginButtonHandler={loginButtonHandler} />
+                <LoginButton loginButtonHandler={loginButtonHandler}>
+                    {fetching ? <PulseLoader size={10} color="#fff" /> : "Login"}
+                </LoginButton>
                 <div className='text-[15px] font-normal text-grey'>
                     {"Don't have an account? "}
                     <Link href='/signup'>

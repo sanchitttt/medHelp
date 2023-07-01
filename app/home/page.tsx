@@ -11,6 +11,7 @@ export default function Home() {
     required: true,
     onUnauthenticated() {
       // The user is not authenticated, handle it here.
+
       redirect('/login')
     },
   });
@@ -24,13 +25,13 @@ export default function Home() {
       <>
         <div className='w-[100%] flex items-center justify-between'>
           <div className='flex gap-[15px] items-center'>
-            <Image
+            {session?.user?.image && <Image
               src={session.user?.image as string}
               className='rounded-full'
               width={32}
               height={32}
               alt='Profile image'
-            />
+            />}
             <div className='text-[15px]'>Welcome {session.user?.name?.split(' ')[0]}</div>
           </div>
           <button
