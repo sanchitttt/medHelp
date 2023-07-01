@@ -12,6 +12,10 @@ input {
   background-color: transparent;
 }
 
+input:-webkit-autofill{
+  background:#E5E7EB;
+}
+
 input:focus {
   outline: none;
 }

@@ -1,9 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react'
-import CurrentPage from '../CurrentPage'
-import EmailInput from './EmailInput'
-import PasswordInput from './PasswordInput';
+import CurrentPage from '../components/CurrentPage'
+import EmailInput from '../components/reusable/inputs/EmailInput'
+import PasswordInput from '../components/reusable/inputs/PasswordInput';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 let emailColor: null | string = null;
@@ -47,7 +48,12 @@ function Login() {
                         Login
                     </button>
                     <div className='text-[15px] font-normal text-grey'>
-                        {"Don't have an account? "}<span className='text-green text-[15px]'> Sign Up</span>
+                        {"Don't have an account? "}
+                        <Link href='/signup'>
+                            <span className='text-green text-[15px]'>
+                                Sign Up
+                            </span>
+                        </Link>
                     </div>
                     <div className='flex w-[100%] items-center justify-between'>
                         <div className='w-[40%] h-[1px] bg-black' />

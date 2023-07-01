@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import { PasswordIcon } from '../reusable/icons'
+import { PasswordIcon } from '../icons'
 
 function PasswordInput({ value, onChangeHandler, passwordColor }: {
   value: string,
