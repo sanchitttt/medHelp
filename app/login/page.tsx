@@ -54,7 +54,22 @@ function Login() {
 
         if (validFields) {
             const status = signIn('credentials', { email: email, password: password, redirect: false, callbackUrl: '/home' });
-            console.log(status);
+            status.then((res) => {
+                if (res?.error === "CredentialsSignin") {
+                    toast.error('Invalid credentials', {
+                        position: "bottom-center",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+            }).catch((err) => {
+
+            })
             // setFetching(true)
             // const verifyLogin = async () => {
             //     const response = await axios.post(`${config.BACKEND_ENDPOINT}/auth/login`, {

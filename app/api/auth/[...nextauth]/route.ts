@@ -26,8 +26,7 @@ const authOptions: NextAuthOptions = {
                             })
                             return verifiedUser.data;
                         } catch (error) {
-                            console.log(error);
-                            return null;
+                            throw error;
                         }
                     } catch (error) {
                         console.log('pura hi error')
