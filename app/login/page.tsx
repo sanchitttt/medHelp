@@ -1,85 +1,111 @@
 'use client';
-import React, { useEffect, useState } from 'react'
-import CurrentPage from '../components/CurrentPage'
-import EmailInput from '../components/reusable/inputs/EmailInput'
+import { useState } from 'react'
+import CurrentPage from '../components/CurrentPage';
+import { useSession } from 'next-auth/react';
+import EmailInput from '../components/reusable/inputs/EmailInput';
 import PasswordInput from '../components/reusable/inputs/PasswordInput';
-import Image from 'next/image';
+import LoginButton from './LoginButton';
 import Link from 'next/link';
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-let emailColor: null | string = null;
+import GoogleLogin from './GoogleLogin';
+import validator from 'validator';
+import { ToastContainer, toast } from 'react-toastify';
+import { SyncLoader } from 'react-spinners';
+import 'react-toastify/dist/ReactToastify.css';
+import { redirect } from 'next/navigation';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { data: session, status } = useSession();
 
-    useEffect(() => {
-        if (email.match(emailRegex)) {
-            emailColor = '#199A8E'
-        } else {
-            emailColor = null;
+    const loginButtonHandler = () => {
+        let validFields = true;
+        if (!validator.isEmail(email)) {
+            validFields = false;
+            toast.error('Invalid email', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
-    }, [email]);
+        if (password.length <= 7) {
+            validFields = false;
+            toast.error('Password should be atleast 8 characters long', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
 
-    useEffect(() => {
-        // if (password.match(emailRegex)) {
-        //     emailColor = '#199A8E'
-        // } else {
-        //     emailColor = null;
-        // }
-    }, [password]);
+        if (validFields) {
+
+        }
+    }
+
+    if (status === 'loading') {
+        return <div className='absolute left-[50%] top-[50%]' style={{ transform: 'translate(-50%,-50%)' }}>
+            <SyncLoader color="#36d7b7" />
+        </div>
+    }
+
+    if (session) {
+        redirect('/home');
+    }
 
     return (
-        <main className='w-[100vw] max-w-[512px] h-[100vh] flex items-center justify-center'>
-            <div className='w-[95%] flex flex-col items-center h-[95%]'>
-                <CurrentPage pageName='Login' />
-                <div className='w-[95%] mt-[100px] flex flex-col items-center gap-[20px]'>
-                    <EmailInput
-                        value={email}
-                        emailColor={emailColor}
-                        onChangeHandler={(e) => setEmail(e.target.value)}
-                    />
-                    <PasswordInput
-                        value={password}
-                        passwordColor={'#A1A8B0'}
-                        onChangeHandler={(e) => setPassword(e.target.value)}
-                    />
-                    <button className='w-[90%] bg-green flex items-center justify-center text-white font-semibold text-[16px] h-[56px] rounded-full'>
-                        Login
-                    </button>
-                    <div className='text-[15px] font-normal text-grey'>
-                        {"Don't have an account? "}
-                        <Link href='/signup'>
-                            <span className='text-green text-[15px]'>
-                                Sign Up
-                            </span>
-                        </Link>
-                    </div>
-                    <div className='flex w-[100%] items-center justify-between'>
-                        <div className='w-[40%] h-[1px] bg-black' />
-                        <div>OR</div>
-                        <div className='w-[40%] h-[1px] bg-black' />
-                    </div>
-                    <div className='mt-[50px] flex flex-col w-[100%]'>
-                        <button className='w-[100%] h-[56px] flex items-center justify-center bg-white rounded-full border-[1px] border-lightGrey'>
-                            <div className='w-[90%] flex items-center justify-between'>
-                                <Image
-                                    src='/Google.jpg'
-                                    width={20}
-                                    height={20}
-                                    alt='Google'
-                                />
-                                <div className='text-semibold font-semibold text-black '>
-                                    Login with Google
-                                </div>
-                                <div></div>
-                            </div>
-                        </button>
-                    </div>
+        <>
+            <CurrentPage pageName='Login' />
+            <div className='w-[95%] mt-[100px] flex flex-col items-center gap-[20px]'>
+                <EmailInput
+                    value={email}
+                    onChangeHandler={(e) => setEmail(e.target.value)}
+                />
+                <PasswordInput
+                    value={password}
+                    passwordColor={password.length > 7 ? '#199A8E' : '#A1A8B0'}
+                    onChangeHandler={(e) => setPassword(e.target.value)}
+                />
+                <LoginButton loginButtonHandler={loginButtonHandler} />
+                <div className='text-[15px] font-normal text-grey'>
+                    {"Don't have an account? "}
+                    <Link href='/signup'>
+                        <span className='text-green text-[15px]'>
+                            Sign Up
+                        </span>
+                    </Link>
+                </div>
+                <div className='flex w-[100%] items-center justify-between'>
+                    <div className='w-[40%] h-[1px] bg-black' />
+                    <div>OR</div>
+                    <div className='w-[40%] h-[1px] bg-black' />
+                </div>
+                <div className='mt-[50px] flex flex-col w-[100%]'>
+                    <GoogleLogin />
                 </div>
             </div>
-
-        </main>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={3500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+        </>
     )
 }
 
