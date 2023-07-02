@@ -1,9 +1,12 @@
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export function ChevronLeft() {
+    const router = useRouter()
     return (
         <Image
+            onClick={() => router.back()}
             src='/LeftChevron.svg'
             width={8}
             height={15.8}

@@ -18,7 +18,7 @@ const authOptions: NextAuthOptions = {
                     password: { label: "Password", type: "password", placeholder: "Enter your password" }
                 },
                 async authorize(credentials, req) {
-                     try {
+                    try {
                         try {
                             const verifiedUser = await axios.post(`${config.BACKEND_ENDPOINT}/auth/login`, {
                                 email: credentials?.email,
@@ -51,7 +51,7 @@ const authOptions: NextAuthOptions = {
             })
             console.log(profile)
             return true;
-        }
+        },
     }
 
 }
