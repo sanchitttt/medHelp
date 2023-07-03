@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { PulseLoader } from 'react-spinners'
-import config from '../config';
+import config from '../../config';
 import { useSession } from 'next-auth/react';
 
 function NonVerified() {

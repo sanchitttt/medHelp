@@ -7,7 +7,7 @@ function GoogleLogin() {
     return (
         <button className='w-[100%] h-[56px] flex items-center justify-center bg-white rounded-full border-[1px] border-lightGrey'
             onClick={() => signIn('google', {
-                callbackUrl: '/home'
+                callbackUrl: '/auth/home'
             })}
         >
             <div className='w-[90%] flex items-center justify-between'>

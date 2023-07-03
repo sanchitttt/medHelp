@@ -4,22 +4,14 @@ import { redirect } from "next/navigation";
 import { SyncLoader } from "react-spinners";
 import { useEffect, useState } from 'react';
 import axios from "axios";
-import config from "../config";
-import Unauthorized from "./Unauthorized";
+import config from "../../config";
 import Authorized from "./Authorized";
+import { Session } from "next-auth";
 
 export default function Home() {
   const [verifiedStatus, setVerifiedStatus] = useState(false);
   const [checkingVerifiedStatus, setCheckingVerifiedStatus] = useState(true);
-
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-
-      redirect('/login')
-    },
-  });
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (session) {
@@ -38,16 +30,12 @@ export default function Home() {
   }, [session]);
 
 
-  if (status === 'loading' || checkingVerifiedStatus) {
+  if (checkingVerifiedStatus) {
     return <div className='absolute left-[50%] top-[50%]' style={{ transform: 'translate(-50%,-50%)' }}>
       <SyncLoader color="#36d7b7" />
     </div>
   }
-  if (session) {
-    return <Authorized session={session} verifiedStatus={verifiedStatus} />
-  }
-  else {
-    return <Unauthorized />
-  }
+
+  return <Authorized session={session as Session} verifiedStatus={verifiedStatus} />
 
 }
