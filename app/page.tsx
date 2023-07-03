@@ -15,7 +15,7 @@ function RootPage() {
         </div>
     }
     if (session) {
-        redirect('/home');
+        redirect('/auth/home');
     }
     return (
         <main className='w-[100vw] max-w-[512px] h-[100vh] flex items-center justify-center'>
