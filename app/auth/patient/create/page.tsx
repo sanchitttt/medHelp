@@ -34,7 +34,7 @@ const initialFormData = {
 function PatientCreateForm() {
     const [tempTag, setTempTag] = useState('');
     const [fetching, setFetching] = useState(false);
-    const [patientCreated, setPatientCreated] = useState(true);
+    const [patientCreated, setPatientCreated] = useState(false);
     const [formData, setFormData] = useState<PatientFormPayload>(initialFormData);
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
 
