@@ -40,6 +40,10 @@ function PatientsViewPage() {
     const [visibleRecords, setVisibleRecords] = useState<Record<string, string | string[]> | []>([]);
 
     useEffect(() => {
+        document.title = 'MedHelp | Patient Records'
+    },[]);
+
+    useEffect(() => {
         if (data && Array.isArray(data.data)) {
             //@ts-ignore
             setVisibleRecords(data.data);

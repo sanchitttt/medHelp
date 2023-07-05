@@ -29,6 +29,10 @@ export default function Home() {
     }
   }, [session]);
 
+  useEffect(() => {
+    document.title = 'MedHelp | Home'
+  }, []);
+
 
   if (checkingVerifiedStatus) {
     return <div className='absolute left-[50%] top-[50%]' style={{ transform: 'translate(-50%,-50%)' }}>

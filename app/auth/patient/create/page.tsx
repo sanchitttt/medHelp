@@ -2,7 +2,7 @@
 import CurrentPage from '@/app/components/CurrentPage'
 import PrimaryButton from '@/app/components/buttons';
 import PatientFormInput from '@/app/components/reusable/inputs/PatientFormInput';
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback, useEffect } from 'react'
 import validator from 'validator';
 import { useDropzone } from 'react-dropzone';
 import { PatientFormPayload } from '@/app/types';
@@ -39,6 +39,10 @@ function PatientCreateForm() {
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
 
     const fileRef = useRef();
+
+    useEffect(() => {
+        document.title = 'MedHelp | Create Patient'
+    },[]);
 
     const submitHandler = () => {
         const { name, email, contact, age, diagnosis, surgery, dateOfSurgery, images } = formData;
