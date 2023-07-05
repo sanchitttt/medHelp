@@ -1,0 +1,18 @@
+If it takes a computer approximately 1 millisecond to iterate through all the possible 32 bit unsigned integers, about how long wil it take that computer to iterate through all possible 64 bit unsigned integers?
+
+Pick ONE option
+
+OQ ms
+(1) 32ms
+() sams
+
+O 32 seconds
+
+(0) 12 hours
+(1) 17days
+(0) 7 weeks
+() 4months
+(0) 3years
+
+O It's not possible to iterate through all of the 64 bit integers
+

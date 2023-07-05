@@ -9,7 +9,9 @@ function Verified() {
                 <Link href='/auth/patient/create' className='w-[100%] flex items-center justify-center'>
                     <PrimaryButton>Create Patient Record</PrimaryButton>
                 </Link>
-                <PrimaryButton>View Patient Records</PrimaryButton>
+                <Link href='/auth/patient/view' className='w-[100%] flex items-center justify-center'>
+                    <PrimaryButton>View Patient Records</PrimaryButton>
+                </Link>
             </div>
         </div>
     )
