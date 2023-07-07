@@ -83,8 +83,8 @@ function PatientsViewPage() {
                 className='px-[10px] w-[100%] min-h-[56px] flex items-center rounded-full bg-lightGrey border-[1px] border-[#A1A8B0] placeholder:font-normal font-semibold text-[16px] leading-[150%] '
                 placeholder='Search for patients...'
             />
-            <div className='flex justify-between w-[100%] mt-[25px]'>
-                <div className='w-[100%] rounded-full'
+            <div className='flex justify-center w-[100%] mt-[25px]'>
+                <div className='w-[100%] rounded-full flex justify-center'
                     onClick={() => setShowFilters(!showFilters)}
                 >
                     <PrimaryButton>{!showFilters ? "Show Filters" : "Hide Filters"}</PrimaryButton>
