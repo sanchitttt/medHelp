@@ -38,11 +38,10 @@ function PatientCreateForm() {
     const [formData, setFormData] = useState<PatientFormPayload>(initialFormData);
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
 
-    const fileRef = useRef();
 
     useEffect(() => {
         document.title = 'MedHelp | Create Patient'
-    },[]);
+    }, []);
 
     const submitHandler = () => {
         const { name, email, contact, age, diagnosis, surgery, dateOfSurgery, images } = formData;
@@ -76,18 +75,24 @@ function PatientCreateForm() {
                 }
             }
             setFetching(true);
-            acceptedFiles.forEach((item, idx) => {
-                const conversion = async () => {
-                    const url = await convertBase64(item);
-                    urls.push(url as string);
-                }
-                conversion().then(() => {
-                    if (idx === acceptedFiles.length - 1) {
-                        fetch()
-
+            if (acceptedFiles.length) {
+                acceptedFiles.forEach((item, idx) => {
+                    const conversion = async () => {
+                        const url = await convertBase64(item);
+                        urls.push(url as string);
                     }
-                });
-            })
+                    conversion().then(() => {
+                        if (idx === acceptedFiles.length - 1) {
+                            fetch()
+
+                        }
+                    });
+                })
+            }
+            else {
+                fetch()
+            }
+
         }
 
     }

@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 import PatientViewCard from './PatientViewCard';
 import CurrentPage from '@/app/components/CurrentPage';
 import filterRecords from '@/app/utils/filterPatients';
+import Link from 'next/link';
 
 export type SortOptions = 'Recently Updated' | 'Recently Created' | 'Default';
 const sortOptions: SortOptions[] = [
@@ -41,7 +42,7 @@ function PatientsViewPage() {
 
     useEffect(() => {
         document.title = 'MedHelp | Patient Records'
-    },[]);
+    }, []);
 
     useEffect(() => {
         if (data && Array.isArray(data.data)) {
@@ -66,7 +67,7 @@ function PatientsViewPage() {
 
     useEffect(() => {
         if (selectedSortOption !== 'Default') {
-            
+
         }
     }, [selectedSortOption])
 
@@ -151,11 +152,13 @@ function PatientsViewPage() {
                 : <div className='grid grid-cols-2 gap-[30px] mt-[50px] w-[100%]'>
                     {/**@ts-ignore */}
                     {visibleRecords.length ? visibleRecords.map((item) => {
-                        return <PatientViewCard
-                            contact={item.contact}
-                            key={item.email}
-                            name={item.name}
-                        />
+                        return <Link href={`/auth/patient/view/${item._id}`} key={item.email}>
+                            <PatientViewCard
+                                _id={item._id}
+                                contact={item.contact}
+                                name={item.name}
+                            />
+                        </Link>
                     }) : <div className='col-span-2 w-[100%] flex items-center justify-center text-[28px] mt-[25px] font-semi bold flex-col'>
                         No records found
                         <span className='text-[10px]'>Try chaning the search query and filters</span>

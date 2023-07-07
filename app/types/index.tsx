@@ -13,7 +13,8 @@ export interface PatientFormInput {
     error?: boolean,
     success?: boolean,
     errorLabel?: string,
-    placeholder: string
+    placeholder: string,
+    editingMode?: boolean
 }
 
 export interface PatientFormPayload {

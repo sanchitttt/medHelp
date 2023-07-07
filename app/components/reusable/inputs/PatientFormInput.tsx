@@ -9,7 +9,8 @@ function PatientFormInput({
     label,
     success,
     placeholder,
-    type = 'text'
+    type = 'text',
+    editingMode = true
 }: PatientFormInput) {
     return (
         <div className={`flex flex-col w-[100%] border-[1px] py-[10px] rounded-[5px]  ${value.length ? success ? 'border-green' : 'border-[#f3494c]' : 'border-black'}`}>
@@ -21,7 +22,7 @@ function PatientFormInput({
                 onChange={onChangeHandler}
                 placeholder={placeholder}
             />
-            {!success && value.length && errorLabel ?
+            {!success && value.length && errorLabel && editingMode ?
                 <div className='text-red text-[15px] px-[5px] text-[#f3494c]'>
                     {errorLabel}
                 </div> : null}

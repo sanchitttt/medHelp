@@ -5,13 +5,16 @@ import React from 'react'
 export function ChevronLeft() {
     const router = useRouter()
     return (
-        <Image
-            onClick={() => router.back()}
-            src='/LeftChevron.svg'
-            width={8}
-            height={15.8}
-            alt='Go Back'
-        />
+        <button  onClick={() => router.back()}>
+            <Image
+               
+                src='/LeftChevron.svg'
+                width={8}
+                height={15.8}
+                alt='Go Back'
+                className='pointer'
+            />
+        </button>
     )
 }
 
