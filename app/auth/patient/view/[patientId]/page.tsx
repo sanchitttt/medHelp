@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useRouter, usePathname } from 'next/navigation';
 import axios from 'axios';
 import config from '@/app/config';
-import { SyncLoader } from 'react-spinners';
+import { PulseLoader, SyncLoader } from 'react-spinners';
 import Input from './Input';
 import CurrentPage from '@/app/components/CurrentPage';
 import TagCapsule from '../../create/TagCapsule';
@@ -16,6 +16,7 @@ import { useDropzone } from 'react-dropzone';
 import PatientFormInput from '@/app/components/reusable/inputs/PatientFormInput';
 import validator from 'validator';
 import convertBase64 from '@/app/utils/convertBase64';
+import PrimaryButton from '@/app/components/buttons';
 
 const deletedImages: string[] = [];
 let tempDeletedImage = '';
@@ -57,6 +58,7 @@ function PatientViewById() {
             && dateOfSurgery
         ) {
 
+            setFetching(true);
             const newlyAddedImages: string[] = [];
             const fetch = async () => {
                 try {
@@ -74,6 +76,7 @@ function PatientViewById() {
                     })
                     console.log(response)
                     setFetching(false)
+                    window.alert('Patient record updated!')
                 } catch (error) {
 
                 }
@@ -384,14 +387,15 @@ function PatientViewById() {
                             }}
                             className={`hover:scale-[1.01] w-[90%] border-[1px] border-green text-green flex items-center justify-center  font-semibold text-[16px] h-[56px] rounded-full  `}
                         >
-                            Cancel Changes
+                            Exit editing mode
                         </button>
-                        <button
-                            onClick={submitHandler}
-                            className={`hover:scale-[1.01] w-[90%] bg-green flex items-center justify-center text-white font-semibold text-[16px] h-[56px] rounded-full  `}
-                        >
-                            Update
-                        </button>
+                        <PrimaryButton loginButtonHandler={submitHandler}>
+                            {fetching ? <div className='flex flex-col items-center'>
+                                <div>Please wait</div>
+                                <PulseLoader size={10} color="#fff" />
+
+                            </div> : "Update"}
+                        </PrimaryButton>
                     </div> :
                         <div className='w-[100%] flex justify-center items-center mb-[10px]'>
                             <button
